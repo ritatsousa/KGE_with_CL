@@ -1,1 +1,1 @@
-# KGE_with_CL
+# Improving Knowledge Graph Embeddings through Contrastive Learning with Negative Statements
