@@ -1,0 +1,3 @@
+2
+hasAnnot	0
+subClassOf	1
