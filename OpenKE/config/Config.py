@@ -317,7 +317,6 @@ class Config(object):
 		self.graph_neg = tf.Graph()
 		
 		with self.graph_pos.as_default():
-			# RITA
 			config = tf.ConfigProto(device_count = {'GPU':1})
 			self.sess_pos = tf.Session(config=config, graph=self.graph_pos)
 			#self.sess = tf.Session()
@@ -342,7 +341,6 @@ class Config(object):
 				self.sess_pos.run(tf.global_variables_initializer())
 
 		with self.graph_neg.as_default():
-			# RITA
 			config = tf.ConfigProto(device_count = {'GPU':1})
 			self.sess_neg = tf.Session(config=config, graph=self.graph_neg)
 			#self.sess = tf.Session()
@@ -437,14 +435,14 @@ class Config(object):
 
 		perturb_tails = np.random.rand(len(all_tails)) < 0.5
 
-		# Randomly select 100 unique tails for each head-relation pair
+		# Select from unique tails for each head-relation pair
 		selected_heads_list = [unique_heads for _ in range(len(all_tails))]
 		test_t_perturb_heads = np.repeat(all_tails, len(unique_heads))  # Repeat heads for sampled tails
 		test_r_perturb_heads = np.repeat(all_relations, len(unique_heads))  # Repeat relations accordingly
 		test_h_perturb_heads = np.concatenate(selected_heads_list)  # Flatten to match test_h and test_r shape
 		res_perturb_heads = self.test_step(test_h_perturb_heads, test_t_perturb_heads, test_r_perturb_heads, "neg")
 
-		# Randomly select 100 unique tails for each head-relation pair
+		# Select from unique tails for each head-relation pair
 		selected_tails_list = [unique_tails for _ in range(len(all_heads))]
 		test_h_perturb_tails = np.repeat(all_heads, len(unique_tails))  # Repeat heads for sampled tails
 		test_r_perturb_tails = np.repeat(all_relations, len(unique_tails))
@@ -481,14 +479,14 @@ class Config(object):
 
 		perturb_tails = np.random.rand(len(all_tails)) < 0.5
 		
-		# Randomly select 100 unique tails for each head-relation pair
+		# Select from unique tails for each head-relation pair
 		selected_heads_list = [unique_heads for _ in range(len(all_tails))]
 		test_t_perturb_heads = np.repeat(all_tails, len(unique_heads))  # Repeat heads for sampled tails
 		test_r_perturb_heads = np.repeat(all_relations, len(unique_heads))  # Repeat relations accordingly
 		test_h_perturb_heads = np.concatenate(selected_heads_list)  # Flatten to match test_h and test_r shape
 		res_perturb_heads = self.test_step(test_h_perturb_heads, test_t_perturb_heads, test_r_perturb_heads, "pos")
 
-		# Randomly select 100 unique tails for each head-relation pair
+		#Select from unique tails for each head-relation pair
 		selected_tails_list = [unique_tails for _ in range(len(all_heads))]
 		test_h_perturb_tails = np.repeat(all_heads, len(unique_tails))  # Repeat heads for sampled tails
 		test_r_perturb_tails = np.repeat(all_relations, len(unique_tails))
