@@ -78,11 +78,12 @@ def train_classifier_cv(ML_model, path_output, y, x):
 
 
 
-def processing_embeddings_dictionaries(set_h, set_t, ent_embeddings_pos, ent_embeddings_pos_neg, repre):
+def processing_embeddings_dictionaries(model_embedding, set_h, set_t, ent_embeddings_pos, ent_embeddings_pos_neg, repre):
 
     """
     Process and combine head and tail entity embeddings into feature vectors.
     Arguments:
+    model_embedding (str): Embedding model type ("ComplEx" or other).
     set_h (list[int]): List of head entity IDs.
     set_t (list[int]): List of tail entity IDs.
     ent_embeddings_pos (dict or np.ndarray): entity embeddings trained on the positive graph.
@@ -160,7 +161,7 @@ def evaluate_bimodel_embeddings(model_embedding, path_triples_test, path_entitie
     else:
         ent_embeddings_pos_neg = np.concatenate((ent_embeddings_pos, ent_embeddings_neg), axis=1)
     
-    x_pos, x_pos_neg = processing_embeddings_dictionaries(set_h, set_t, ent_embeddings_pos, ent_embeddings_pos_neg, "hada")
+    x_pos, x_pos_neg = processing_embeddings_dictionaries(model_embedding, set_h, set_t, ent_embeddings_pos, ent_embeddings_pos_neg, "hada")
 
     train_classifier_cv("RF", f"{path_output}KGE_pos-hada-RF_Classification_Metrics.txt", set_y, x_pos)
     train_classifier_cv("RF", f"{path_output}KGE_pos_concate_neg-hada-RF_Classification_Metrics.txt", set_y, x_pos_neg)
@@ -181,4 +182,5 @@ for model_embedding in model_embeddings:
     path_output = "data/go/" + model_embedding + "/"
     path_entities = "data/go/entity2id.txt"
     path_relations = "data/go/relation2id.txt"
+
     evaluate_bimodel_embeddings(model_embedding, path_triples_test, path_entities, path_relations, checkpoint_path_pos, checkpoint_path_neg, path_output)
